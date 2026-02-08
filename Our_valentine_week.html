@@ -51,6 +51,71 @@
             font-weight: 300;
         }
 
+        .notification-prompt {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .notification-prompt.show {
+            display: block;
+            animation: fadeInDown 0.5s ease;
+        }
+
+        .notification-prompt h3 {
+            color: #e91e63;
+            margin-bottom: 10px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8em;
+        }
+
+        .notification-prompt p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .notification-prompt button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-weight: 600;
+        }
+
+        .notification-prompt button:hover {
+            transform: scale(1.05);
+        }
+
+        .notification-prompt button:active {
+            transform: scale(0.95);
+        }
+
+        .notification-status {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 10px auto;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .notification-status.enabled {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+
         .timeline {
             max-width: 1200px;
             margin: 0 auto;
@@ -483,9 +548,18 @@
         <p>A week of surprises, even from miles away</p>
     </div>
 
+    <!-- Notification Permission Prompt -->
+    <div class="notification-prompt" id="notificationPrompt">
+        <h3>Get Daily Love Notifications 💕</h3>
+        <p>Let me surprise you every day with a notification when a new day unlocks! You'll get a sweet reminder even when you're not looking at this page.</p>
+        <button onclick="requestNotificationPermission()">Enable Notifications 🔔</button>
+    </div>
+
+    <div class="notification-status" id="notificationStatus"></div>
+
     <div class="timeline" id="timeline">
         <!-- Day 1: Rose Day -->
-        <div class="day-card" data-day="1" data-date="2026-02-07" style="animation-delay: 0.1s;">
+        <div class="day-card" data-day="1" data-date="2026-02-07" data-emoji="🌹" data-title="Rose Day" style="animation-delay: 0.1s;">
             <div class="timeline-dot"></div>
             <div class="card-content">
                 <div class="card-gradient" style="background: var(--rose-day);"></div>
@@ -519,7 +593,7 @@
         </div>
 
         <!-- Day 2: Propose Day -->
-        <div class="day-card" data-day="2" data-date="2026-02-08" style="animation-delay: 0.2s;">
+        <div class="day-card" data-day="2" data-date="2026-02-08" data-emoji="💍" data-title="Propose Day" style="animation-delay: 0.2s;">
             <div class="timeline-dot"></div>
             <div class="card-content">
                 <div class="card-gradient" style="background: var(--propose-day);"></div>
@@ -553,7 +627,7 @@
         </div>
 
         <!-- Day 3: Chocolate Day -->
-        <div class="day-card" data-day="3" data-date="2026-02-09" style="animation-delay: 0.3s;">
+        <div class="day-card" data-day="3" data-date="2026-02-09" data-emoji="🍫" data-title="Chocolate Day" style="animation-delay: 0.3s;">
             <div class="timeline-dot"></div>
             <div class="card-content">
                 <div class="card-gradient" style="background: var(--chocolate-day);"></div>
@@ -587,7 +661,7 @@
         </div>
 
         <!-- Day 4: Teddy Day -->
-        <div class="day-card" data-day="4" data-date="2026-02-10" style="animation-delay: 0.4s;">
+        <div class="day-card" data-day="4" data-date="2026-02-10" data-emoji="🧸" data-title="Teddy Day" style="animation-delay: 0.4s;">
             <div class="timeline-dot"></div>
             <div class="card-content">
                 <div class="card-gradient" style="background: var(--teddy-day);"></div>
@@ -621,7 +695,7 @@
         </div>
 
         <!-- Day 5: Promise Day -->
-        <div class="day-card" data-day="5" data-date="2026-02-11" style="animation-delay: 0.5s;">
+        <div class="day-card" data-day="5" data-date="2026-02-11" data-emoji="🤝" data-title="Promise Day" style="animation-delay: 0.5s;">
             <div class="timeline-dot"></div>
             <div class="card-content">
                 <div class="card-gradient" style="background: var(--promise-day);"></div>
@@ -655,7 +729,7 @@
         </div>
 
         <!-- Day 6: Hug Day -->
-        <div class="day-card" data-day="6" data-date="2026-02-12" style="animation-delay: 0.6s;">
+        <div class="day-card" data-day="6" data-date="2026-02-12" data-emoji="🤗" data-title="Hug Day" style="animation-delay: 0.6s;">
             <div class="timeline-dot"></div>
             <div class="card-content">
                 <div class="card-gradient" style="background: var(--hug-day);"></div>
@@ -689,7 +763,7 @@
         </div>
 
         <!-- Day 7: Kiss Day -->
-        <div class="day-card" data-day="7" data-date="2026-02-13" style="animation-delay: 0.7s;">
+        <div class="day-card" data-day="7" data-date="2026-02-13" data-emoji="💋" data-title="Kiss Day" style="animation-delay: 0.7s;">
             <div class="timeline-dot"></div>
             <div class="card-content">
                 <div class="card-gradient" style="background: var(--kiss-day);"></div>
@@ -723,7 +797,7 @@
         </div>
 
         <!-- Day 8: Valentine's Day -->
-        <div class="day-card" data-day="8" data-date="2026-02-14" style="animation-delay: 0.8s;">
+        <div class="day-card" data-day="8" data-date="2026-02-14" data-emoji="❤️" data-title="Valentine's Day" style="animation-delay: 0.8s;">
             <div class="timeline-dot"></div>
             <div class="card-content">
                 <div class="card-gradient" style="background: var(--valentine-day);"></div>
@@ -781,6 +855,146 @@
             heart.style.animationDuration = (5 + Math.random() * 3) + 's';
             heartsContainer.appendChild(heart);
         }
+
+        // ========== NOTIFICATION SYSTEM ==========
+        
+        const dayData = [
+            { date: '2026-02-07', emoji: '🌹', title: 'Rose Day', message: 'A garden of love awaits you...' },
+            { date: '2026-02-08', emoji: '💍', title: 'Propose Day', message: 'I have something special to ask you...' },
+            { date: '2026-02-09', emoji: '🍫', title: 'Chocolate Day', message: "Something sweeter than chocolate is waiting..." },
+            { date: '2026-02-10', emoji: '🧸', title: 'Teddy Day', message: 'A warm hug from me to you...' },
+            { date: '2026-02-11', emoji: '🤝', title: 'Promise Day', message: 'Promises from my heart to yours...' },
+            { date: '2026-02-12', emoji: '🤗', title: 'Hug Day', message: 'Sending you the warmest embrace...' },
+            { date: '2026-02-13', emoji: '💋', title: 'Kiss Day', message: 'A kiss across the miles...' },
+            { date: '2026-02-14', emoji: '❤️', title: "Valentine's Day", message: 'The day is finally here, my love! 💕' }
+        ];
+
+        // Check if browser supports notifications
+        function checkNotificationSupport() {
+            return 'Notification' in window;
+        }
+
+        // Request notification permission
+        async function requestNotificationPermission() {
+            if (!checkNotificationSupport()) {
+                alert('Your browser does not support notifications 😔');
+                return;
+            }
+
+            try {
+                const permission = await Notification.requestPermission();
+                
+                if (permission === 'granted') {
+                    localStorage.setItem('notificationsEnabled', 'true');
+                    updateNotificationStatus();
+                    scheduleAllNotifications();
+                    
+                    // Show a test notification
+                    new Notification('Notifications Enabled! 💕', {
+                        body: "You'll get a sweet reminder for each special day!",
+                        icon: '💖',
+                        badge: '💕',
+                        tag: 'valentines-enabled'
+                    });
+                } else {
+                    localStorage.setItem('notificationsEnabled', 'false');
+                    updateNotificationStatus();
+                }
+            } catch (error) {
+                console.error('Notification permission error:', error);
+            }
+        }
+
+        // Update notification status display
+        function updateNotificationStatus() {
+            const statusDiv = document.getElementById('notificationStatus');
+            const promptDiv = document.getElementById('notificationPrompt');
+            
+            if (!checkNotificationSupport()) {
+                statusDiv.textContent = 'Notifications not supported on this browser 😔';
+                return;
+            }
+
+            const permission = Notification.permission;
+            
+            if (permission === 'granted') {
+                statusDiv.textContent = '🔔 Notifications enabled! You\'ll get daily reminders';
+                statusDiv.classList.add('enabled');
+                promptDiv.classList.remove('show');
+            } else if (permission === 'denied') {
+                statusDiv.textContent = '🔕 Notifications blocked. Enable them in browser settings to get daily reminders.';
+                promptDiv.classList.remove('show');
+            } else {
+                // Show prompt to enable notifications
+                promptDiv.classList.add('show');
+                statusDiv.textContent = '';
+            }
+        }
+
+        // Schedule all notifications
+        function scheduleAllNotifications() {
+            if (Notification.permission !== 'granted') return;
+
+            dayData.forEach(day => {
+                scheduleNotificationForDay(day);
+            });
+        }
+
+        // Schedule notification for a specific day
+        function scheduleNotificationForDay(day) {
+            const now = new Date();
+            const targetDate = new Date(day.date + 'T00:00:00'); // Midnight of that day
+            
+            const timeUntilNotification = targetDate - now;
+
+            // If the date hasn't passed yet
+            if (timeUntilNotification > 0) {
+                setTimeout(() => {
+                    sendNotification(day);
+                }, timeUntilNotification);
+            }
+        }
+
+        // Send a notification
+        function sendNotification(day) {
+            if (Notification.permission !== 'granted') return;
+
+            const notification = new Notification(`${day.emoji} ${day.title} is Here!`, {
+                body: day.message,
+                icon: '💖',
+                badge: day.emoji,
+                tag: `valentine-day-${day.date}`,
+                requireInteraction: true, // Keeps notification visible until user interacts
+                vibrate: [200, 100, 200] // Vibration pattern for mobile
+            });
+
+            // When user clicks the notification, open the page
+            notification.onclick = function() {
+                window.focus();
+                this.close();
+            };
+        }
+
+        // Check for notifications every minute (backup)
+        function checkForDueNotifications() {
+            if (Notification.permission !== 'granted') return;
+
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            
+            dayData.forEach(day => {
+                if (day.date === todayStr) {
+                    const notificationSent = localStorage.getItem(`notification-sent-${day.date}`);
+                    
+                    if (!notificationSent) {
+                        sendNotification(day);
+                        localStorage.setItem(`notification-sent-${day.date}`, 'true');
+                    }
+                }
+            });
+        }
+
+        // ========== ORIGINAL DAY UNLOCK SYSTEM ==========
 
         // Auto-unlock days based on date
         function checkAndUnlockDays() {
@@ -905,11 +1119,24 @@
             });
         });
 
+        // ========== INITIALIZATION ==========
+
+        // Check notification status on load
+        updateNotificationStatus();
+
         // Check for unlocked days on page load
         checkAndUnlockDays();
         
-        // Check every minute for new unlocks
-        setInterval(checkAndUnlockDays, 60000);
+        // Check every minute for new unlocks and notifications
+        setInterval(() => {
+            checkAndUnlockDays();
+            checkForDueNotifications();
+        }, 60000);
+
+        // Schedule all notifications if permission already granted
+        if (Notification.permission === 'granted') {
+            scheduleAllNotifications();
+        }
 
         // Add particle effect on card hover (only for unlocked cards)
         const cards = document.querySelectorAll('.card-content');
@@ -942,6 +1169,12 @@
             @keyframes sparkleFloat {
                 to {
                     transform: translateY(-50px);
+                    opacity: 0;
+                }
+            }
+            @keyframes confetti-fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
                     opacity: 0;
                 }
             }
