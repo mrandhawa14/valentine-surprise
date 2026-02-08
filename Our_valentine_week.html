@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Valentine's Week 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose-day: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --propose-day: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --chocolate-day: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            --teddy-day: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --promise-day: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --hug-day: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            --kiss-day: linear-gradient(135deg, #fdcbf1 0%, #e6dee9 100%);
+            --valentine-day: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+
+        .timeline {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .day-card {
+            position: relative;
+            margin-bottom: 50px;
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        .day-card.locked {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .day-card.locked .card-content {
+            filter: blur(3px);
+            position: relative;
+        }
+
+        .day-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            z-index: 100;
+        }
+
+        .day-card.unlocked {
+            animation: unlock 0.8s ease;
+        }
+
+        @keyframes unlock {
+            0% {
+                transform: scale(0.9);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .unlock-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            text-align: center;
+            display: none;
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .unlock-notification h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5em;
+            color: #e91e63;
+            margin-bottom: 15px;
+        }
+
+        .unlock-notification p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .love-letter {
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe8ec 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #e91e63;
+            font-style: italic;
+            color: #555;
+            line-height: 1.8;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .love-letter::before {
+            content: '"';
+            font-size: 3em;
+            color: #e91e63;
+            opacity: 0.3;
+            position: absolute;
+            margin-left: -15px;
+            margin-top: -10px;
+        }
+
+        .love-letter-text {
+            display: none;
+            font-style: italic;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+        }
+
+        .love-letter.revealed .love-letter-text {
+            display: block;
+        }
+
+        .love-letter.revealed {
+            animation: glowPulse 2s ease-in-out;
+        }
+
+        .love-letter-placeholder {
+            color: #e91e63;
+            font-weight: 600;
+            text-align: center;
+            font-style: normal;
+        }
+
+        .love-letter.revealed .love-letter-placeholder {
+            display: none;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: #e91e63;
+            animation: blink 0.7s step-end infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(233, 30, 99, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(233, 30, 99, 0.6);
+            }
+        }
+
+        .day-card:nth-child(odd) {
+            margin-left: 0;
+            margin-right: 50%;
+            padding-right: 40px;
+        }
+
+        .day-card:nth-child(even) {
+            margin-left: 50%;
+            margin-right: 0;
+            padding-left: 40px;
+        }
+
+        .card-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .day-emoji {
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        .day-number {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .day-title {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .day-date {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .day-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid #667eea;
+            border-radius: 50%;
+            top: 30px;
+            z-index: 10;
+        }
+
+        .day-card:nth-child(odd) .timeline-dot {
+            right: -50px;
+        }
+
+        .day-card:nth-child(even) .timeline-dot {
+            left: -50px;
+        }
+
+        .activity-section {
+            background: rgba(0, 0, 0, 0.02);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-list li {
+            padding: 8px 0;
+            color: #666;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .activity-list li::before {
+            content: '💕';
+            position: absolute;
+            left: 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .checkbox-item:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #f5576c;
+            flex-shrink: 0;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            flex: 1;
+            filter: blur(5px);
+            user-select: none;
+            transition: filter 0.5s ease;
+            color: transparent;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + label {
+            filter: blur(0);
+            color: inherit;
+            text-shadow: none;
+            animation: revealReason 0.6s ease;
+        }
+
+        @keyframes revealReason {
+            0% {
+                filter: blur(5px);
+                transform: scale(0.98);
+            }
+            100% {
+                filter: blur(0);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            animation: floatHeart 8s infinite ease-in-out;
+            opacity: 0.3;
+        }
+
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) rotate(15deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .day-card:nth-child(odd),
+            .day-card:nth-child(even) {
+                margin-left: 40px;
+                margin-right: 0;
+                padding-left: 20px;
+                padding-right: 0;
+            }
+
+            .day-card:nth-child(odd) .timeline-dot,
+            .day-card:nth-child(even) .timeline-dot {
+                left: -30px;
+                right: auto;
+            }
+
+            .header h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="header">
+        <h1>My Love Letter to You 💖</h1>
+        <p>A week of surprises, even from miles away</p>
+    </div>
+
+    <div class="timeline" id="timeline">
+        <!-- Day 1: Rose Day -->
+        <div class="day-card" data-day="1" data-date="2026-02-07" style="animation-delay: 0.1s;">
+            <div class="timeline-dot"></div>
+            <div class="card-content">
+                <div class="card-gradient" style="background: var(--rose-day);"></div>
+                <div class="day-emoji">🌹</div>
+                <div class="day-number">Day 1</div>
+                <div class="day-title">Rose Day</div>
+                <div class="day-date">February 7, 2026</div>
+                <div class="day-description">
+                    I wish I could give you a garden full of roses, but instead, I'm giving you something that will never wilt...
+                </div>
+                <div class="love-letter" data-letter="rose">
+                    <div class="love-letter-placeholder">💌 Click to read my letter...</div>
+                    <div class="love-letter-text" data-text="My dearest, if I could pick a rose for every time you made me smile, I'd be walking through an endless garden. Even though I can't be there to hand you real roses, know that you bloom in my heart every single day. You are my rose - beautiful, precious, and making my life infinitely better. Distance means so little when someone means so much. 🌹"></div>
+                </div>
+                <div class="activity-section">
+                    <div class="activity-title">Reasons I Love You (Check to Reveal):</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rose1">
+                        <label for="rose1">Your smile lights up my entire world 🌟</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rose2">
+                        <label for="rose2">The way you laugh at my silly jokes (even the bad ones)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rose3">
+                        <label for="rose3">How you make every ordinary moment feel special</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 2: Propose Day -->
+        <div class="day-card" data-day="2" data-date="2026-02-08" style="animation-delay: 0.2s;">
+            <div class="timeline-dot"></div>
+            <div class="card-content">
+                <div class="card-gradient" style="background: var(--propose-day);"></div>
+                <div class="day-emoji">💍</div>
+                <div class="day-number">Day 2</div>
+                <div class="day-title">Propose Day</div>
+                <div class="day-date">February 8, 2026</div>
+                <div class="day-description">
+                    Today, I want to propose something special - not just my love, but my promise to always be yours...
+                </div>
+                <div class="love-letter" data-letter="propose">
+                    <div class="love-letter-placeholder">💌 Click to read my letter...</div>
+                    <div class="love-letter-text" data-text="I propose that we keep choosing each other, every single day. I propose late night talks, silly inside jokes, and being each other's safe place. I propose loving you through every season - in sunshine and storms. Even miles apart, my heart is right there with you. You're not just my girlfriend, you're my best friend, my happiness, my home. 💕"></div>
+                </div>
+                <div class="activity-section">
+                    <div class="activity-title">What Makes You Special:</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="propose1">
+                        <label for="propose1">Your kindness - you have the biggest, most beautiful heart</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="propose2">
+                        <label for="propose2">How you believe in me even when I doubt myself</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="propose3">
+                        <label for="propose3">The way you make me want to be a better person 💖</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 3: Chocolate Day -->
+        <div class="day-card" data-day="3" data-date="2026-02-09" style="animation-delay: 0.3s;">
+            <div class="timeline-dot"></div>
+            <div class="card-content">
+                <div class="card-gradient" style="background: var(--chocolate-day);"></div>
+                <div class="day-emoji">🍫</div>
+                <div class="day-number">Day 3</div>
+                <div class="day-title">Chocolate Day</div>
+                <div class="day-date">February 9, 2026</div>
+                <div class="day-description">
+                    They say chocolate makes everything better, but honestly, you're sweeter than any chocolate I could ever give you...
+                </div>
+                <div class="love-letter" data-letter="chocolate">
+                    <div class="love-letter-placeholder">💌 Click to read my letter...</div>
+                    <div class="love-letter-text" data-text="Life with you is like the perfect chocolate - rich, sweet, and absolutely irresistible. You make ordinary days feel special and hard days bearable. Your laugh is sweeter than any candy, your smile brighter than any treat. I might not be able to give you chocolates today, but I give you all my sweetest thoughts and warmest feelings. You make my life delicious! 🍫"></div>
+                </div>
+                <div class="activity-section">
+                    <div class="activity-title">Sweet Things About You:</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="choco1">
+                        <label for="choco1">Your eyes - I could get lost in them forever 😍</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="choco2">
+                        <label for="choco2">How you care about everyone around you</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="choco3">
+                        <label for="choco3">The cute way you do [add her specific habit here] ❤️</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 4: Teddy Day -->
+        <div class="day-card" data-day="4" data-date="2026-02-10" style="animation-delay: 0.4s;">
+            <div class="timeline-dot"></div>
+            <div class="card-content">
+                <div class="card-gradient" style="background: var(--teddy-day);"></div>
+                <div class="day-emoji">🧸</div>
+                <div class="day-number">Day 4</div>
+                <div class="day-title">Teddy Day</div>
+                <div class="day-date">February 10, 2026</div>
+                <div class="day-description">
+                    I wish I could give you the biggest, softest teddy bear to hug when you miss me...
+                </div>
+                <div class="love-letter" data-letter="teddy">
+                    <div class="love-letter-placeholder">💌 Click to read my letter...</div>
+                    <div class="love-letter-text" data-text="Even though I can't give you a teddy bear to hold, I want you to know that whenever you need comfort, whenever you need warmth, think of me and know that I'm sending you the biggest virtual hug across all these miles. You are my comfort too - your voice, your presence, even just knowing you're there makes everything better. Until I can hold you again, hold onto these words: You are loved, you are cherished, you are everything. 🧸💕"></div>
+                </div>
+                <div class="activity-section">
+                    <div class="activity-title">Things I Adore About You:</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="teddy1">
+                        <label for="teddy1">Your voice - it's my favorite sound in the world 🎵</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="teddy2">
+                        <label for="teddy2">How you make me feel safe and loved</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="teddy3">
+                        <label for="teddy3">Call me tonight - I need to hear that beautiful voice ❤️</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 5: Promise Day -->
+        <div class="day-card" data-day="5" data-date="2026-02-11" style="animation-delay: 0.5s;">
+            <div class="timeline-dot"></div>
+            <div class="card-content">
+                <div class="card-gradient" style="background: var(--promise-day);"></div>
+                <div class="day-emoji">🤝</div>
+                <div class="day-number">Day 5</div>
+                <div class="day-title">Promise Day</div>
+                <div class="day-date">February 11, 2026</div>
+                <div class="day-description">
+                    Today I make promises that come straight from my heart - promises I'll keep forever...
+                </div>
+                <div class="love-letter" data-letter="promise">
+                    <div class="love-letter-placeholder">💌 Click to read my letter...</div>
+                    <div class="love-letter-text" data-text="I promise to love you on your good days and bad days. I promise to choose you every single morning. I promise that distance will never diminish what we have - if anything, it makes me appreciate you more. I promise to make you laugh when you're sad, to listen when you need to talk, and to be quiet when you just need someone there. I promise that no matter where life takes us, my heart will always find its way back to you. These aren't just words - they're my truth. 💖"></div>
+                </div>
+                <div class="activity-section">
+                    <div class="activity-title">Why You're My Forever:</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="promise1">
+                        <label for="promise1">You understand me like no one else ever has</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="promise2">
+                        <label for="promise2">Your strength and courage inspire me every day</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="promise3">
+                        <label for="promise3">With you, I've found my home 🏠💕</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 6: Hug Day -->
+        <div class="day-card" data-day="6" data-date="2026-02-12" style="animation-delay: 0.6s;">
+            <div class="timeline-dot"></div>
+            <div class="card-content">
+                <div class="card-gradient" style="background: var(--hug-day);"></div>
+                <div class="day-emoji">🤗</div>
+                <div class="day-number">Day 6</div>
+                <div class="day-title">Hug Day</div>
+                <div class="day-date">February 12, 2026</div>
+                <div class="day-description">
+                    If I could, I'd hold you right now and never let go...
+                </div>
+                <div class="love-letter" data-letter="hug">
+                    <div class="love-letter-placeholder">💌 Click to read my letter...</div>
+                    <div class="love-letter-text" data-text="This is the hardest part of being away - not being able to wrap my arms around you when you need it, not feeling your warmth next to me. But here's what I want you to do: close your eyes, take a deep breath, and imagine I'm right there. Feel my arms around you, keeping you safe and warm. That's how I feel every time I think of you. You are my safe haven, my peace, my everything. Sending you the tightest, warmest, most loving virtual hug across the miles. 🤗💕"></div>
+                </div>
+                <div class="activity-section">
+                    <div class="activity-title">More Reasons I'm Crazy About You:</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hug1">
+                        <label for="hug1">How you always know when I need cheering up</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hug2">
+                        <label for="hug2">Your hugs are the best place in the world 🤗</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hug3">
+                        <label for="hug3">Screenshot this - save my love for whenever you need it ❤️</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 7: Kiss Day -->
+        <div class="day-card" data-day="7" data-date="2026-02-13" style="animation-delay: 0.7s;">
+            <div class="timeline-dot"></div>
+            <div class="card-content">
+                <div class="card-gradient" style="background: var(--kiss-day);"></div>
+                <div class="day-emoji">💋</div>
+                <div class="day-number">Day 7</div>
+                <div class="day-title">Kiss Day</div>
+                <div class="day-date">February 13, 2026</div>
+                <div class="day-description">
+                    One day before Valentine's, and all I can think about is how much I miss kissing you...
+                </div>
+                <div class="love-letter" data-letter="kiss">
+                    <div class="love-letter-placeholder">💌 Click to read my letter...</div>
+                    <div class="love-letter-text" data-text="I miss everything about you, but especially those moments - the soft kisses, the surprise pecks, the long passionate ones that make time stop. Every kiss with you feels like coming home. I'm counting down the moments until I can kiss you again, until I can show you just how much you mean to me. Until then, here's a kiss sent through the stars, through the miles, landing softly on your lips. You are my favorite person to kiss, to hold, to love. Forever and always. 💋💕"></div>
+                </div>
+                <div class="activity-section">
+                    <div class="activity-title">What I Love Most:</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="kiss1">
+                        <label for="kiss1">Kissing you feels like coming home 💋</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="kiss2">
+                        <label for="kiss2">How you make my heart race even after all this time</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="kiss3">
+                        <label for="kiss3">You're my best friend and my greatest love 💖</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 8: Valentine's Day -->
+        <div class="day-card" data-day="8" data-date="2026-02-14" style="animation-delay: 0.8s;">
+            <div class="timeline-dot"></div>
+            <div class="card-content">
+                <div class="card-gradient" style="background: var(--valentine-day);"></div>
+                <div class="day-emoji">❤️</div>
+                <div class="day-number">Day 8</div>
+                <div class="day-title">Valentine's Day</div>
+                <div class="day-date">February 14, 2026</div>
+                <div class="day-description">
+                    The moment we've been waiting for - our day to celebrate this beautiful love we share...
+                </div>
+                <div class="love-letter" data-letter="valentine">
+                    <div class="love-letter-placeholder">💌 Click to read my letter...</div>
+                    <div class="love-letter-text" data-text="Happy Valentine's Day, my love. I know I can't be there, I know I can't give you flowers or chocolates or all the things you deserve. But what I can give you is this: my whole heart, completely and entirely yours. You are the best thing that ever happened to me. You make me want to be better, do better, love better. Even across the distance, you fill my days with joy and my nights with dreams of us. I may not have much to give materially, but I give you everything I am. You are my Valentine today, tomorrow, and every day after. I love you more than words could ever express. Thank you for loving me, for choosing me, for being mine. ❤️💕"></div>
+                </div>
+                <div class="activity-section">
+                    <div class="activity-title">Forever Reasons:</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="valentine1">
+                        <label for="valentine1">You make me believe in soulmates ✨</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="valentine2">
+                        <label for="valentine2">Every love song makes me think of you 🎶</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="valentine3">
+                        <label for="valentine3">You're my today, my tomorrow, my always</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="valentine4">
+                        <label for="valentine4">I love you more than words could ever say ❤️❤️❤️</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="unlock-notification" id="unlockNotification">
+        <h2>New Day Unlocked! 💖</h2>
+        <p>A special message awaits you...</p>
+    </div>
+
+    <script>
+        // Create floating hearts
+        const heartsContainer = document.getElementById('floatingHearts');
+        const heartSymbols = ['💕', '💖', '💗', '💓', '💝', '❤️', '💘'];
+        
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = (5 + Math.random() * 3) + 's';
+            heartsContainer.appendChild(heart);
+        }
+
+        // Auto-unlock days based on date
+        function checkAndUnlockDays() {
+            const today = new Date();
+            const dayCards = document.querySelectorAll('.day-card');
+            const notification = document.getElementById('unlockNotification');
+            
+            dayCards.forEach(card => {
+                const cardDate = new Date(card.getAttribute('data-date'));
+                
+                // Unlock if today is on or after the card's date
+                if (today >= cardDate) {
+                    card.classList.remove('locked');
+                    card.classList.add('unlocked');
+                } else {
+                    card.classList.add('locked');
+                }
+            });
+            
+            // Check if a new day just unlocked (within the last minute)
+            const justUnlocked = Array.from(dayCards).find(card => {
+                const cardDate = new Date(card.getAttribute('data-date'));
+                const timeDiff = today - cardDate;
+                return timeDiff > 0 && timeDiff < 60000; // Within last minute
+            });
+            
+            if (justUnlocked) {
+                showUnlockNotification();
+            }
+        }
+        
+        function showUnlockNotification() {
+            const notification = document.getElementById('unlockNotification');
+            notification.style.display = 'block';
+            
+            // Create celebration particles
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.textContent = '✨';
+                    particle.style.position = 'fixed';
+                    particle.style.left = (Math.random() * 100) + '%';
+                    particle.style.top = '-20px';
+                    particle.style.fontSize = '24px';
+                    particle.style.pointerEvents = 'none';
+                    particle.style.animation = 'confetti-fall 3s linear';
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 3000);
+                }, i * 50);
+            }
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 4000);
+        }
+
+        // Save checkbox states to localStorage
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        
+        // Load saved states for checkboxes (blur effect)
+        checkboxes.forEach(checkbox => {
+            const saved = localStorage.getItem(checkbox.id);
+            if (saved === 'true') {
+                checkbox.checked = true;
+            }
+            
+            // Save on change
+            checkbox.addEventListener('change', function() {
+                localStorage.setItem(this.id, this.checked);
+            });
+        });
+
+        // TRUE TYPEWRITER EFFECT for love letters
+        const loveLetters = document.querySelectorAll('.love-letter');
+        
+        function typeWriter(element, text, speed = 30) {
+            let i = 0;
+            element.innerHTML = ''; // Start empty
+            
+            // Add cursor
+            const cursor = document.createElement('span');
+            cursor.className = 'typing-cursor';
+            element.appendChild(cursor);
+            
+            function type() {
+                if (i < text.length) {
+                    // Insert character before cursor
+                    const char = text.charAt(i);
+                    const textNode = document.createTextNode(char);
+                    element.insertBefore(textNode, cursor);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    // Remove cursor when done
+                    setTimeout(() => cursor.remove(), 1000);
+                }
+            }
+            type();
+        }
+        
+        loveLetters.forEach(letter => {
+            const textElement = letter.querySelector('.love-letter-text');
+            const text = textElement.getAttribute('data-text');
+            const letterId = letter.getAttribute('data-letter');
+            
+            // Check if already revealed
+            const revealed = localStorage.getItem('letter-' + letterId);
+            if (revealed === 'true') {
+                letter.classList.add('revealed');
+                textElement.textContent = text; // Show full text
+            }
+            
+            // Add click handler
+            letter.addEventListener('click', function() {
+                if (!this.classList.contains('revealed')) {
+                    this.classList.add('revealed');
+                    localStorage.setItem('letter-' + letterId, 'true');
+                    // Start typewriter effect
+                    typeWriter(textElement, text, 30); // 30ms per character
+                }
+            });
+        });
+
+        // Check for unlocked days on page load
+        checkAndUnlockDays();
+        
+        // Check every minute for new unlocks
+        setInterval(checkAndUnlockDays, 60000);
+
+        // Add particle effect on card hover (only for unlocked cards)
+        const cards = document.querySelectorAll('.card-content');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                if (!this.closest('.day-card').classList.contains('locked')) {
+                    createSparkles(this);
+                }
+            });
+        });
+
+        function createSparkles(element) {
+            const rect = element.getBoundingClientRect();
+            const sparkle = document.createElement('div');
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = rect.left + rect.width / 2 + 'px';
+            sparkle.style.top = rect.top + 'px';
+            sparkle.style.fontSize = '20px';
+            sparkle.textContent = '✨';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.animation = 'sparkleFloat 1s ease-out forwards';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+
+        // Add sparkle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkleFloat {
+                to {
+                    transform: translateY(-50px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
