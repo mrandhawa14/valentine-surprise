@@ -31,12 +31,35 @@
         min-height: 100vh;
         padding: 20px;
         overflow-x: hidden;
+        transition: all 1s ease;
+    }
+
+    body.future-mode {
+        background: #000;
+        background-image: 
+            linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+    }
+
+    body.future-mode::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(ellipse at center, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
     }
 
     .header {
         text-align: center;
         margin-bottom: 40px;
         animation: fadeInDown 1s ease;
+        position: relative;
+        z-index: 1;
     }
 
     .header h1 {
@@ -45,18 +68,74 @@
         color: white;
         text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
         margin-bottom: 10px;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .header h1 {
+        color: #00ffff;
+        text-shadow: 
+            0 0 10px rgba(0, 255, 255, 0.8),
+            0 0 20px rgba(0, 255, 255, 0.6),
+            0 0 30px rgba(0, 255, 255, 0.4),
+            0 0 40px rgba(0, 255, 255, 0.2);
+        animation: neonPulse 2s ease-in-out infinite;
+    }
+
+    body.future-mode .header h1.glitch::before,
+    body.future-mode .header h1.glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    body.future-mode .header h1.glitch::before {
+        animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+        color: #ff00ff;
+        z-index: -1;
+    }
+
+    body.future-mode .header h1.glitch::after {
+        animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        color: #00ffff;
+        z-index: -2;
+    }
+
+    @keyframes neonPulse {
+        0%, 100% {
+            text-shadow: 
+                0 0 10px rgba(0, 255, 255, 0.8),
+                0 0 20px rgba(0, 255, 255, 0.6),
+                0 0 30px rgba(0, 255, 255, 0.4);
+        }
+        50% {
+            text-shadow: 
+                0 0 20px rgba(0, 255, 255, 1),
+                0 0 30px rgba(0, 255, 255, 0.8),
+                0 0 40px rgba(0, 255, 255, 0.6),
+                0 0 50px rgba(0, 255, 255, 0.4);
+        }
     }
 
     .header p {
         color: rgba(255, 255, 255, 0.9);
         font-size: 1.2em;
         font-weight: 300;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .header p {
+        color: #00ffff;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
     }
 
     .timeline {
         max-width: 1200px;
         margin: 0 auto;
         position: relative;
+        z-index: 1;
     }
 
     .timeline::before {
@@ -68,6 +147,19 @@
         height: 100%;
         background: rgba(255, 255, 255, 0.3);
         border-radius: 2px;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .timeline::before {
+        width: 2px;
+        background: linear-gradient(to bottom, 
+            transparent,
+            rgba(0, 255, 255, 0.5),
+            rgba(0, 255, 255, 0.8),
+            rgba(0, 255, 255, 0.5),
+            transparent
+        );
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
     }
 
     .day-card {
@@ -164,6 +256,16 @@
         position: relative;
         cursor: pointer;
         overflow: hidden;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .love-letter {
+        background: rgba(0, 40, 60, 0.6);
+        backdrop-filter: blur(5px);
+        border-left: 4px solid #00ffff;
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        color: #88dddd;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
     }
 
     .love-letter::before {
@@ -174,6 +276,11 @@
         position: absolute;
         margin-left: -15px;
         margin-top: -10px;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .love-letter::before {
+        color: #00ffff;
     }
 
     .love-letter-text {
@@ -196,6 +303,12 @@
         font-weight: 600;
         text-align: center;
         font-style: normal;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .love-letter-placeholder {
+        color: #00ffff;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
     }
 
     .love-letter.revealed .love-letter-placeholder {
@@ -249,6 +362,44 @@
         overflow: hidden;
     }
 
+    body.future-mode .card-content {
+        background: rgba(0, 20, 40, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        box-shadow: 
+            0 0 20px rgba(0, 255, 255, 0.2),
+            inset 0 0 20px rgba(0, 255, 255, 0.05);
+    }
+
+    .card-content::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, 
+            transparent, 
+            rgba(0, 255, 255, 0.1), 
+            transparent
+        );
+        border-radius: 20px;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    body.future-mode .card-content:hover {
+        transform: translateY(-10px);
+        border-color: rgba(0, 255, 255, 0.6);
+        box-shadow: 
+            0 0 30px rgba(0, 255, 255, 0.4),
+            inset 0 0 30px rgba(0, 255, 255, 0.1);
+    }
+
+    body.future-mode .card-content:hover::before {
+        opacity: 1;
+    }
+
     .card-content:hover {
         transform: translateY(-10px);
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
@@ -266,6 +417,7 @@
         font-size: 3em;
         margin-bottom: 10px;
         animation: bounce 2s infinite;
+        display: inline-block;
     }
 
     .day-number {
@@ -283,18 +435,34 @@
         font-weight: 600;
         margin-bottom: 10px;
         color: #333;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .day-title {
+        color: #00ffff;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
     }
 
     .day-date {
         color: #999;
         font-size: 0.9em;
         margin-bottom: 15px;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .day-date {
+        color: #00cccc;
     }
 
     .day-description {
         color: #555;
         line-height: 1.6;
         margin-bottom: 20px;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .day-description {
+        color: #88dddd;
     }
 
     .timeline-dot {
@@ -306,6 +474,32 @@
         border-radius: 50%;
         top: 30px;
         z-index: 10;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .timeline-dot {
+        background: #00ffff;
+        border: 3px solid rgba(0, 0, 0, 0.8);
+        box-shadow: 
+            0 0 10px rgba(0, 255, 255, 0.8),
+            0 0 20px rgba(0, 255, 255, 0.4),
+            inset 0 0 10px rgba(0, 255, 255, 0.5);
+        animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+        0%, 100% {
+            box-shadow: 
+                0 0 10px rgba(0, 255, 255, 0.8),
+                0 0 20px rgba(0, 255, 255, 0.4),
+                inset 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        50% {
+            box-shadow: 
+                0 0 20px rgba(0, 255, 255, 1),
+                0 0 30px rgba(0, 255, 255, 0.6),
+                inset 0 0 15px rgba(0, 255, 255, 0.8);
+        }
     }
 
     .day-card:nth-child(odd) .timeline-dot {
@@ -321,12 +515,24 @@
         padding: 15px;
         border-radius: 10px;
         margin-top: 15px;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .activity-section {
+        background: rgba(0, 255, 255, 0.05);
+        border: 1px solid rgba(0, 255, 255, 0.2);
     }
 
     .activity-title {
         font-weight: 600;
         color: #333;
         margin-bottom: 10px;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .activity-title {
+        color: #00ffff;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
     }
 
     .checkbox-item {
@@ -342,8 +548,18 @@
         position: relative;
     }
 
+    body.future-mode .checkbox-item {
+        background: rgba(0, 40, 60, 0.4);
+        border: 1px solid rgba(0, 255, 255, 0.1);
+    }
+
     .checkbox-item:hover {
         background: rgba(0, 0, 0, 0.02);
+    }
+
+    body.future-mode .checkbox-item:hover {
+        background: rgba(0, 40, 60, 0.6);
+        border-color: rgba(0, 255, 255, 0.3);
     }
 
     .checkbox-item input[type="checkbox"] {
@@ -352,6 +568,11 @@
         cursor: pointer;
         accent-color: #f5576c;
         flex-shrink: 0;
+        transition: all 1s ease;
+    }
+
+    body.future-mode .checkbox-item input[type="checkbox"] {
+        accent-color: #00ffff;
     }
 
     .checkbox-item label {
@@ -364,11 +585,19 @@
         text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
     }
 
+    body.future-mode .checkbox-item label {
+        text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+    }
+
     .checkbox-item input[type="checkbox"]:checked + label {
         filter: blur(0);
         color: inherit;
         text-shadow: none;
         animation: revealReason 0.6s ease;
+    }
+
+    body.future-mode .checkbox-item input[type="checkbox"]:checked + label {
+        color: #88dddd;
     }
 
     @keyframes revealReason {
@@ -423,9 +652,22 @@
         gap: 10px;
     }
 
+    body.future-mode .memories-button {
+        background: linear-gradient(135deg, #00ffff 0%, #0088ff 100%);
+        color: #000;
+        border: 2px solid #00ffff;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+        animation: buttonPulse 2s ease-in-out infinite;
+    }
+
     .memories-button:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 20px rgba(245, 87, 108, 0.6);
+    }
+
+    body.future-mode .memories-button:hover {
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+        background: linear-gradient(135deg, #00ffff 0%, #00ddff 100%);
     }
 
     @keyframes pulsate {
@@ -437,6 +679,209 @@
             box-shadow: 0 8px 25px rgba(245, 87, 108, 0.8);
             transform: scale(1.05);
         }
+    }
+
+    @keyframes buttonPulse {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+            transform: scale(1);
+        }
+        50% {
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+            transform: scale(1.02);
+        }
+    }
+
+    /* Screen Break Transition Effect */
+    .screen-break-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0;
+        display: none;
+    }
+
+    .screen-break-overlay.active {
+        display: block;
+        animation: screenBreak 1.5s ease-out;
+    }
+
+    @keyframes screenBreak {
+        0% {
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+            background: radial-gradient(circle, #fff 0%, #000 50%);
+        }
+        20% {
+            opacity: 1;
+            background: #000;
+            transform: scaleY(1);
+        }
+        30% {
+            opacity: 1;
+            transform: scaleY(0.1) translateY(0);
+        }
+        40% {
+            opacity: 1;
+            transform: scaleY(1) translateY(0);
+        }
+        50% {
+            opacity: 0.8;
+            filter: 
+                hue-rotate(90deg) 
+                contrast(2) 
+                brightness(1.5);
+        }
+        60% {
+            opacity: 0.6;
+        }
+        70% {
+            opacity: 0.4;
+        }
+        80% {
+            opacity: 0.2;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes staticNoise {
+        0%, 100% {
+            background-position: 0% 0%;
+        }
+        10% {
+            background-position: 10% 10%;
+        }
+        20% {
+            background-position: -5% 5%;
+        }
+        30% {
+            background-position: 15% -10%;
+        }
+        40% {
+            background-position: -10% 15%;
+        }
+        50% {
+            background-position: 20% 5%;
+        }
+        60% {
+            background-position: 5% -15%;
+        }
+        70% {
+            background-position: -15% 10%;
+        }
+        80% {
+            background-position: 10% -5%;
+        }
+        90% {
+            background-position: -5% 20%;
+        }
+    }
+
+    /* 2029 Future Letter Modal */
+    .future-letter-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 3000;
+        animation: modalFadeIn 0.5s ease;
+        overflow-y: auto;
+    }
+
+    .future-letter-content {
+        position: relative;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 60px 40px;
+        background: rgba(0, 20, 40, 0.95);
+        border: 2px solid #00ffff;
+        border-radius: 20px;
+        box-shadow: 
+            0 0 50px rgba(0, 255, 255, 0.3),
+            inset 0 0 50px rgba(0, 255, 255, 0.05);
+    }
+
+    .future-letter-header {
+        text-align: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .future-letter-header h2 {
+        font-family: 'Dancing Script', cursive;
+        font-size: 3em;
+        color: #00ffff;
+        text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        margin-bottom: 10px;
+    }
+
+    .future-letter-date {
+        color: #00cccc;
+        font-size: 1.2em;
+        font-style: italic;
+    }
+
+    .future-letter-body {
+        color: #88dddd;
+        line-height: 2;
+        font-size: 1.1em;
+        text-align: justify;
+    }
+
+    .future-letter-body p {
+        margin-bottom: 25px;
+    }
+
+    .future-letter-signature {
+        text-align: right;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0, 255, 255, 0.3);
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.5em;
+        color: #00ffff;
+    }
+
+    .letter-close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 40px;
+        color: #00ffff;
+        cursor: pointer;
+        z-index: 3001;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    }
+
+    .letter-close:hover {
+        transform: rotate(90deg);
+        color: #ff00ff;
+        text-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+    }
+
+    .letter-timer {
+        position: absolute;
+        top: 20px;
+        left: 30px;
+        color: #00ffff;
+        font-size: 1.2em;
+        font-family: 'Poppins', sans-serif;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        opacity: 0.7;
     }
 
     /* Modal/Slideshow Styles */
@@ -487,8 +932,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        touch-action: pan-y;
-        user-select: none;
     }
 
     .slide {
@@ -496,7 +939,6 @@
         width: 100%;
         text-align: center;
         animation: slideFade 1s ease;
-        transition: transform 0.3s ease;
     }
 
     .slide.active {
@@ -519,7 +961,6 @@
         max-height: 500px;
         border-radius: 15px;
         box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
-        pointer-events: none;
     }
 
     .slide video {
@@ -538,34 +979,28 @@
 
     .slide-nav {
         position: absolute;
-        top: 0;
+        top: 50%;
         width: 100%;
-        height: 100%;
         display: flex;
-        pointer-events: none;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        padding: 0 20px;
     }
 
-    .slide-nav-left,
-    .slide-nav-right {
-        width: 30%;
-        height: 100%;
+    .slide-nav button {
+        background: rgba(255, 255, 255, 0.3);
+        border: none;
+        color: white;
+        font-size: 30px;
+        padding: 10px 20px;
         cursor: pointer;
-        pointer-events: all;
-        transition: background 0.3s ease;
+        border-radius: 50%;
+        transition: all 0.3s ease;
     }
 
-    .slide-nav-left:active {
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    .slide-nav-right:active {
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    .slide-nav-center {
-        width: 40%;
-        height: 100%;
-        pointer-events: none;
+    .slide-nav button:hover {
+        background: rgba(255, 255, 255, 0.5);
+        transform: scale(1.1);
     }
 
     .slide-dots {
@@ -575,10 +1010,10 @@
 
     .dot {
         display: inline-block;
-        width: 8px;
-        height: 8px;
-        margin: 0 4px;
-        background: rgba(255, 255, 255, 0.4);
+        width: 12px;
+        height: 12px;
+        margin: 0 5px;
+        background: rgba(255, 255, 255, 0.3);
         border-radius: 50%;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -586,11 +1021,39 @@
 
     .dot.active {
         background: white;
-        width: 10px;
-        height: 10px;
+        transform: scale(1.3);
     }
 
-    /* Auto-play indicator - removed */
+    @keyframes glitch {
+        0% {
+            clip-path: inset(40% 0 61% 0);
+            transform: translate(0);
+        }
+        20% {
+            clip-path: inset(92% 0 1% 0);
+            transform: translate(-2px, 2px);
+        }
+        40% {
+            clip-path: inset(43% 0 1% 0);
+            transform: translate(2px, -2px);
+        }
+        60% {
+            clip-path: inset(25% 0 58% 0);
+            transform: translate(-2px, 2px);
+        }
+        80% {
+            clip-path: inset(54% 0 7% 0);
+            transform: translate(2px, -2px);
+        }
+        100% {
+            clip-path: inset(58% 0 43% 0);
+            transform: translate(0);
+        }
+    }
+
+    .glitch {
+        position: relative;
+    }
 
     @keyframes fadeInDown {
         from {
@@ -682,10 +1145,11 @@
 </head>
 <body>
     <div class="floating-hearts" id="floatingHearts"></div>
+    <div class="screen-break-overlay" id="screenBreak"></div>
 
 ```
 <div class="header">
-    <h1>My Love Letter to You 💖</h1>
+    <h1 id="mainTitle">My Love Letter to You 💖</h1>
     <p>A week of surprises, even from miles away</p>
 </div>
 
@@ -700,25 +1164,25 @@
             <div class="day-title">Rose Day</div>
             <div class="day-date">February 7, 2026</div>
             <div class="day-description">
-                I wish I could give you a garden full of roses, but instead, I'm giving you something that will never wilt...
+                I wish I could give you a garden full of roses 🌹🌹🌹, but instead, I'm giving you something that will never wilt... 💝✨
             </div>
             <div class="love-letter" data-letter="rose">
                 <div class="love-letter-placeholder">💌 Click to read my letter...</div>
-                <div class="love-letter-text" data-text="My dearest, if I could pick a rose for every time you made me smile, I'd be walking through an endless garden. Even though I can't be there to hand you real roses, know that you bloom in my heart every single day. You are my rose - beautiful, precious, and making my life infinitely better. Distance means so little when someone means so much. 🌹"></div>
+                <div class="love-letter-text" data-text="My dearest, if I could pick a rose for every time you made me smile, I'd be walking through an endless garden. Living with you every day, I get to see you bloom right before my eyes. You are my rose - beautiful, precious, and making my life infinitely better. Every morning I wake up next to you is a gift. 🌹💕✨"></div>
             </div>
             <div class="activity-section">
-                <div class="activity-title">Reasons I Love You (Check to Reveal):</div>
+                <div class="activity-title">Reasons I Love You (Check to Reveal): 💝</div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="rose1">
-                    <label for="rose1">Your smile lights up my entire world 🌟</label>
+                    <label for="rose1">Your smile lights up my entire world 🌟✨😊</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="rose2">
-                    <label for="rose2">The way you laugh at my silly jokes (even the bad ones)</label>
+                    <label for="rose2">The way you laugh at my silly jokes (even the bad ones) 😄💕🎭</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="rose3">
-                    <label for="rose3">How you make every ordinary moment feel special</label>
+                    <label for="rose3">How you make every ordinary moment feel special ⭐🌈💖</label>
                 </div>
             </div>
         </div>
@@ -734,25 +1198,25 @@
             <div class="day-title">Propose Day</div>
             <div class="day-date">February 8, 2026</div>
             <div class="day-description">
-                Today, I want to propose something special - not just my love, but my promise to always be yours...
+                Today, I want to propose something special - not just my love, but my promise to always be yours... 💍✨💕
             </div>
             <div class="love-letter" data-letter="propose">
                 <div class="love-letter-placeholder">💌 Click to read my letter...</div>
-                <div class="love-letter-text" data-text="I propose that we keep choosing each other, every single day. I propose late night talks, silly inside jokes, and being each other's safe place. I propose loving you through every season - in sunshine and storms. Even miles apart, my heart is right there with you. You're not just my girlfriend, you're my best friend, my happiness, my home. 💕"></div>
+                <div class="love-letter-text" data-text="I propose that we keep choosing each other, every single day. I propose late night talks over tea ☕, silly inside jokes, and being each other's safe place. I propose loving you through every season - in sunshine and storms. Living with you, my heart is exactly where it belongs. You're not just my girlfriend, you're my best friend, my happiness, my home. 💕🏠✨"></div>
             </div>
             <div class="activity-section">
-                <div class="activity-title">What Makes You Special:</div>
+                <div class="activity-title">What Makes You Special: 💖</div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="propose1">
-                    <label for="propose1">Your kindness - you have the biggest, most beautiful heart</label>
+                    <label for="propose1">Your kindness - you have the biggest, most beautiful heart 💝🌟</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="propose2">
-                    <label for="propose2">How you believe in me even when I doubt myself</label>
+                    <label for="propose2">How you believe in me even when I doubt myself 💪✨🙌</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="propose3">
-                    <label for="propose3">The way you make me want to be a better person 💖</label>
+                    <label for="propose3">The way you make me want to be a better person 💖🌈⭐</label>
                 </div>
             </div>
         </div>
@@ -768,25 +1232,25 @@
             <div class="day-title">Chocolate Day</div>
             <div class="day-date">February 9, 2026</div>
             <div class="day-description">
-                They say chocolate makes everything better, but honestly, you're sweeter than any chocolate I could ever give you...
+                They say chocolate makes everything better, but honestly, you're sweeter than any chocolate I could ever give you... 🍫💕✨
             </div>
             <div class="love-letter" data-letter="chocolate">
                 <div class="love-letter-placeholder">💌 Click to read my letter...</div>
-                <div class="love-letter-text" data-text="Life with you is like the perfect chocolate - rich, sweet, and absolutely irresistible. You make ordinary days feel special and hard days bearable. Your laugh is sweeter than any candy, your smile brighter than any treat. I might not be able to give you chocolates today, but I give you all my sweetest thoughts and warmest feelings. You make my life delicious! 🍫"></div>
+                <div class="love-letter-text" data-text="Life with you is like the perfect chocolate - rich, sweet, and absolutely irresistible. You make ordinary days feel special and hard days bearable. Your laugh is sweeter than any candy, your smile brighter than any treat. I love watching you enjoy your tea ☕ in the morning, the way you light up at small joys. You make my life delicious! 🍫💕✨"></div>
             </div>
             <div class="activity-section">
-                <div class="activity-title">Sweet Things About You:</div>
+                <div class="activity-title">Sweet Things About You: 🍬</div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="choco1">
-                    <label for="choco1">Your eyes - I could get lost in them forever 😍</label>
+                    <label for="choco1">Your eyes - I could get lost in them forever 😍💕👀</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="choco2">
-                    <label for="choco2">How you care about everyone around you</label>
+                    <label for="choco2">How you care about everyone around you 💝🌟🤗</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="choco3">
-                    <label for="choco3">The way you make everything better just by being you ❤️</label>
+                    <label for="choco3">The way you make everything better just by being you ❤️✨🌈</label>
                 </div>
             </div>
         </div>
@@ -802,25 +1266,25 @@
             <div class="day-title">Teddy Day</div>
             <div class="day-date">February 10, 2026</div>
             <div class="day-description">
-                I wish I could give you the biggest, softest teddy bear to hug when you miss me...
+                I wish I could give you the biggest, softest teddy bear to hug... but you already have me! 🧸💕😊
             </div>
             <div class="love-letter" data-letter="teddy">
                 <div class="love-letter-placeholder">💌 Click to read my letter...</div>
-                <div class="love-letter-text" data-text="Even though I can't give you a teddy bear to hold, I want you to know that whenever you need comfort, whenever you need warmth, think of me and know that I'm sending you the biggest virtual hug across all these miles. You are my comfort too - your voice, your presence, even just knowing you're there makes everything better. Until I can hold you again, hold onto these words: You are loved, you are cherished, you are everything. 🧸💕"></div>
+                <div class="love-letter-text" data-text="Every time you need comfort, every time you need warmth, I'm right here beside you. You are my comfort too - your voice, your presence, just knowing you're there makes everything better. Until we get our golden retriever 🐕, I'll be your personal teddy bear! You are loved, you are cherished, you are everything. 🧸💕✨"></div>
             </div>
             <div class="activity-section">
-                <div class="activity-title">Things I Adore About You:</div>
+                <div class="activity-title">Things I Adore About You: 🥰</div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="teddy1">
-                    <label for="teddy1">Your voice - it's my favorite sound in the world 🎵</label>
+                    <label for="teddy1">Your voice - it's my favorite sound in the world 🎵💕🔊</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="teddy2">
-                    <label for="teddy2">How you make me feel safe and loved</label>
+                    <label for="teddy2">How you make me feel safe and loved 🏠❤️✨</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="teddy3">
-                    <label for="teddy3">Call me tonight - I need to hear that beautiful voice ❤️</label>
+                    <label for="teddy3">Looking forward to our future golden retriever together! 🐕💕🐾</label>
                 </div>
             </div>
         </div>
@@ -836,7 +1300,7 @@
             <div class="day-title">Promise Day</div>
             <div class="day-date">February 11, 2026</div>
             <div class="day-description">
-                Today I make promises that come straight from my heart, promises I'll keep forever...or till I remember, you know i froget things way too easily but...
+                Today I make promises that come straight from my heart, promises I'll keep forever... 💍✨💕🌟
             </div>
             
             <!-- MAIN PHOTO -->
@@ -844,26 +1308,26 @@
             
             <div class="love-letter" data-letter="promise">
                 <div class="love-letter-placeholder">💌 Click to read my letter...</div>
-                <div class="love-letter-text" data-text="I promise to love you on your good days and bad days. I promise to choose you every single morning. I promise that distance will never diminish what we have, if anything, it makes me appreciate you more. I promise to make you laugh when you're sad, to listen when you need to talk, and to be quiet when you just need someone there. I promise to love you the way You deserve and the way you want to feel loved, and I promise to try my best to remember things. I promise that no matter where life takes us, my heart will always find its way back to you. These aren't just words, they're my truth. 💖"></div>
+                <div class="love-letter-text" data-text="I promise to love you on your good days and bad days. I promise to choose you every single morning. I promise to support you through your PR journey and every step beyond. I promise to make you laugh when you're sad, to listen when you need to talk, and to be quiet when you just need someone there. I promise to love you the way you deserve. I promise that no matter where life takes us, my heart will always find its way back to you. These aren't just words, they're my truth. 💖✨🌟"></div>
             </div>
             
             <button class="memories-button" data-day="5" style="display:none;">
-                💝 Our Memories
+                💝 Our Memories ✨
             </button>
             
             <div class="activity-section">
-                <div class="activity-title">Why You're My Forever:</div>
+                <div class="activity-title">Why You're My Forever: 💍</div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="promise1">
-                    <label for="promise1">You understand me like no one else ever has</label>
+                    <label for="promise1">You understand me like no one else ever has 💕🌟💫</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="promise2">
-                    <label for="promise2">Your strength and courage inspire me every day</label>
+                    <label for="promise2">Your strength navigating immigration inspires me every day 💪✨🌈</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="promise3">
-                    <label for="promise3">With you, I've found my home 🏠💕</label>
+                    <label for="promise3">With you, I've found my home 🏠💕🔑</label>
                 </div>
             </div>
         </div>
@@ -879,7 +1343,7 @@
             <div class="day-title">Hug Day</div>
             <div class="day-date">February 12, 2026</div>
             <div class="day-description">
-                If I could, I'd hold you right now and never let go...
+                Every day I get to hold you is a blessing... and I never want to let go! 🤗💕✨
             </div>
             
             <!-- MAIN PHOTO -->
@@ -887,26 +1351,26 @@
             
             <div class="love-letter" data-letter="hug">
                 <div class="love-letter-placeholder">💌 Click to read my letter...</div>
-                <div class="love-letter-text" data-text="This is the hardest part of being away - not being able to wrap my arms around you when you need it, not feeling your warmth next to me. But here's what I want you to do: close your eyes, take a deep breath, and imagine I'm right there. Feel my arms around you, keeping you safe and warm. That's how I feel every time I think of you. You are my safe haven, my peace, my everything. Sending you the tightest, warmest, most loving virtual hug across the miles. 🤗💕"></div>
+                <div class="love-letter-text" data-text="Living with you means I get to wrap my arms around you whenever I want, and it never gets old. You are my safe haven, my peace, my everything. Every hug with you feels like coming home. Sending you the tightest, warmest, most loving hug right now. 🤗💕✨🏠"></div>
             </div>
             
             <button class="memories-button" data-day="6" style="display:none;">
-                💝 Our Memories
+                💝 Our Memories ✨
             </button>
             
             <div class="activity-section">
-                <div class="activity-title">More Reasons I'm Crazy About You:</div>
+                <div class="activity-title">More Reasons I'm Crazy About You: 😍</div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="hug1">
-                    <label for="hug1">How you always know when I need cheering up</label>
+                    <label for="hug1">How you always know when I need cheering up ☕💕🌟</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="hug2">
-                    <label for="hug2">Your hugs are the best place in the world 🤗</label>
+                    <label for="hug2">Your hugs are the best place in the world 🤗💖✨</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="hug3">
-                    <label for="hug3">Screenshot this - save my love for whenever you need it ❤️</label>
+                    <label for="hug3">Screenshot this - save my love for whenever you need it ❤️📸💕</label>
                 </div>
             </div>
         </div>
@@ -922,34 +1386,34 @@
             <div class="day-title">Kiss Day</div>
             <div class="day-date">February 13, 2026</div>
             <div class="day-description">
-                One day before Valentine's, and all I can think about is how much I miss kissing you...
+                One day before Valentine's, and all I can think about is how lucky I am to kiss you every day... 💋💕✨
             </div>
             
             <!-- MAIN PHOTO -->
-            <img src="Us at night time.jpeg" alt="Our Kiss" class="day-photo" style="display:none;" data-photo="kiss">
+            <img src="Us_at_night_time.heic" alt="Our Kiss" class="day-photo" style="display:none;" data-photo="kiss">
             
             <div class="love-letter" data-letter="kiss">
                 <div class="love-letter-placeholder">💌 Click to read my letter...</div>
-                <div class="love-letter-text" data-text="I miss everything about you, but especially those moments - the soft kisses, the surprise pecks, the long passionate ones that make time stop. Every kiss with you feels like coming home. I'm counting down the moments until I can kiss you again, until I can show you just how much you mean to me. Until then, here's a kiss sent through the stars, through the miles, landing softly on your lips. You are my favorite person to kiss, to hold, to love. Forever and always. 💋💕"></div>
+                <div class="love-letter-text" data-text="I love everything about you, especially those moments - the soft kisses, the surprise pecks, the long passionate ones that make time stop. Every kiss with you feels like coming home. You are my favorite person to kiss, to hold, to love. Forever and always. 💋💕✨🌟"></div>
             </div>
             
             <button class="memories-button" data-day="7" style="display:none;">
-                💝 Our Memories
+                💝 Our Memories ✨
             </button>
             
             <div class="activity-section">
-                <div class="activity-title">What I Love Most:</div>
+                <div class="activity-title">What I Love Most: 😘</div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="kiss1">
-                    <label for="kiss1">Kissing you feels like coming home 💋</label>
+                    <label for="kiss1">Kissing you feels like coming home 💋🏠💕</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="kiss2">
-                    <label for="kiss2">How you make my heart race even after all this time</label>
+                    <label for="kiss2">How you make my heart race even after all this time 💓✨🔥</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="kiss3">
-                    <label for="kiss3">You're my best friend and my greatest love 💖</label>
+                    <label for="kiss3">You're my best friend and my greatest love 💖👫✨</label>
                 </div>
             </div>
         </div>
@@ -965,40 +1429,106 @@
             <div class="day-title">Valentine's Day</div>
             <div class="day-date">February 14, 2026</div>
             <div class="day-description">
-                The moment we've been waiting for - our day to celebrate this beautiful love we share...
+                The moment we've been waiting for - our day to celebrate this beautiful love we share... 💖✨🌹💕
             </div>
             
             <!-- MAIN PHOTO -->
-            <img src="Crwachauth 2025.jpeg" alt="Our Valentine" class="day-photo" style="display:none;" data-photo="valentine">
+            <img src="Crwachauth_2025.HEIC" alt="Our Valentine" class="day-photo" style="display:none;" data-photo="valentine">
             
             <div class="love-letter" data-letter="valentine">
                 <div class="love-letter-placeholder">💌 Click to read my letter...</div>
-                <div class="love-letter-text" data-text="Happy Valentine's Day, my love. I know I can't be there, I know I can't give you flowers or chocolates or all the things you deserve. But what I can give you is this: my whole heart, completely and entirely yours. You are the best thing that ever happened to me. You make me want to be better, do better, love better. Even across the distance, you fill my days with joy and my nights with dreams of us. I may not have much to give materially, but I give you everything I am. You are my Valentine today, tomorrow, and every day after. I love you more than words could ever express. Thank you for loving me, for choosing me, for being mine. ❤️💕"></div>
+                <div class="love-letter-text" data-text="Happy Valentine's Day, my love. Living with you every day is the greatest gift I could ask for. You are the best thing that ever happened to me. You make me want to be better, do better, love better. From navigating your work permit and PR journey together, to planning our future with a golden retriever, to those quiet tea-filled mornings ☕ - every moment with you is precious. I may not have much to give materially, but I give you everything I am. You are my Valentine today, tomorrow, and every day after. I love you more than words could ever express. Thank you for loving me, for choosing me, for being mine. ❤️💕✨🌟"></div>
             </div>
             
             <button class="memories-button" data-day="8" style="display:none;">
-                💝 Our Memories
+                💝 Our Memories ✨
             </button>
             
             <div class="activity-section">
-                <div class="activity-title">Forever Reasons:</div>
+                <div class="activity-title">Forever Reasons: 💑</div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="valentine1">
-                    <label for="valentine1">You make me believe in soulmates ✨</label>
+                    <label for="valentine1">You make me believe in soulmates ✨💫🌟</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="valentine2">
-                    <label for="valentine2">Every love song makes me think of you 🎶</label>
+                    <label for="valentine2">Every love song makes me think of you 🎶💕🎵</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="valentine3">
-                    <label for="valentine3">You're my today, my tomorrow, my always</label>
+                    <label for="valentine3">You're my today, my tomorrow, my always 💖⏰💕</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="valentine4">
-                    <label for="valentine4">I love you more than words could ever say ❤️❤️❤️</label>
+                    <label for="valentine4">I love you more than words could ever say ❤️❤️❤️✨🌹</label>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- 2029 FUTURE LETTER MODAL -->
+<div class="future-letter-modal" id="futureLetter">
+    <div class="letter-timer" id="letterTimer">⏱️ 1:00</div>
+    <span class="letter-close" onclick="closeFutureLetter()">&times;</span>
+    <div class="future-letter-content">
+        <div class="future-letter-header">
+            <h2>A Letter From Our Future</h2>
+            <div class="future-letter-date">February 14, 2029 • Three Years Later</div>
+        </div>
+        <div class="future-letter-body">
+            <p>
+                <em style="color: #00aaaa; font-size: 0.9em;">✨ Note: This letter will only appear once. You have 1 minute to read it. ✨</em>
+            </p>
+            <p>
+                Hey love, it's us. From the future. From 2029. Three years have passed since that Valentine's week in 2026, when we were already living together, building our home, and I made you this website because I wanted you to know how much you mean to me.
+            </p>
+            <p>
+                I'm writing from our apartment. Yes, we found it. After months of searching, we discovered the perfect place with those big windows you wanted, where morning light floods in and you've set up your tea corner. There's a reading nook where you curl up with your books, and somehow you've managed to keep all your plants alive (I still don't know how you do it, but our place looks like a garden). 🌿☕
+            </p>
+            <p>
+                The work permit came through. Do you remember that day? How we checked the email together, and you just stared at the screen for a full minute before it sank in? We celebrated that night, but the real celebration came later when you got your PR. Champagne at midnight, talking until sunrise about everything this meant for us. That approval letter is framed in our apartment, a reminder of what we overcame together. 🥂✨
+            </p>
+            <p>
+                And yes, we're married now. 💍 The girl who was navigating immigration uncertainty is now my wife. When I look at you, I still see that same person who never gave up, who kept pushing forward even when the path wasn't clear. That strength you showed then? It's the foundation of everything we've built.
+            </p>
+            <p>
+                Your career path surprised even you. The immigration caseworker role taught you so much about people's struggles, their journeys, their resilience. But you wanted to go deeper. You're pursuing psychology now, using everything you learned to help people heal and grow. I watch you study, see the passion in your eyes when you talk about your courses, and I'm in awe. You're doing what you were meant to do. 🌟
+            </p>
+            <p>
+                My IT career took off in ways I didn't expect. Remember those job applications, the interviews, the waiting? I landed a position that challenged me, pushed me to grow, and actually pays well enough that we could get our apartment and plan our trips. It's been better than I imagined, and knowing you're proud of me makes it even sweeter. 💻✨
+            </p>
+            <p>
+                We got our golden retriever. We spent weeks debating names, going back and forth, until one day the perfect name just clicked for both of us. He's part of our daily rhythm now. Morning walks while you make your tea, evening cuddles on the couch, the way he somehow knows when either of us needs comfort. He's added so much joy to our lives. 🐕💕
+            </p>
+            <p>
+                Japan and Korea weren't just dreams. We've been to both. Tokyo's electric energy, wandering through Akihabara and Shibuya. Kyoto's peaceful temples where we sat in gardens and just breathed. Seoul's vibrant streets, trying street food at 2 AM, getting lost in neighborhoods and finding unexpected beauty. Cherry blossom season in Japan made you cry (happy tears, you said). These trips are our way of exploring the world together, creating memories in places we only talked about before. 🗾🌸
+            </p>
+            <p>
+                The small moments matter most. Your tea ritual every morning, how you take exactly three sips before you're ready to talk. The way you still steal my hoodies even though you have your own. How we've learned each other's moods so well that sometimes we don't need words. Sunday mornings when we don't leave the apartment, just exist together in comfortable silence. Coming home to you after a hard day and feeling everything settle. These are the things I cherish. 🏠💖
+            </p>
+            <p>
+                The wait in 2026, the uncertainty about work permits and immigration, the stress of job searching and apartment hunting, it all served a purpose. Every challenge taught us patience, communication, and resilience. We learned to support each other through anxiety and doubt. Those skills? We still use them. Marriage isn't always easy, but we know how to weather storms together. 💪
+            </p>
+            <p>
+                I need you to know something: the you of 2026 is worrying about things that will work out. The work permit comes through. The PR happens. The apartment search ends successfully. Your psychology path opens up beautifully. My IT career flourishes. The golden retriever joins our family. Japan and Korea become stamps in our passports. All those late-night conversations about "what if" turn into "remember when we worried about that?" 🌈
+            </p>
+            <p>
+                Three years from now, you'll be exactly where you want to be. In our apartment, tea in hand, our dog at your feet, studying psychology or helping someone through their struggles. You'll think back to this moment, this website, this letter. And you'll smile because you'll understand that every uncertain day in 2026 was building toward something beautiful. ✨
+            </p>
+            <p>
+                I love you. Not just the you of 2029, but the you of 2026 who's reading this right now, wondering if everything will be okay. It will be. We made it. And it's even better than we imagined because we made it together. ☕🐾💕
+            </p>
+            <p>
+                Keep going. Keep believing. Keep being exactly who you are. That person is exactly who I need, exactly who I love, exactly who I'll be building this life with for all the years to come. 💑
+            </p>
+            <p>
+                <em style="color: #00aaaa; font-size: 0.9em;">💫 This message was written just for you, just for this moment. 💫</em>
+            </p>
+        </div>
+        <div class="future-letter-signature">
+            Forever yours,<br>
+            Us 💕
         </div>
     </div>
 </div>
@@ -1012,7 +1542,7 @@
 <div class="memories-modal" id="memoriesModal5">
     <span class="modal-close" onclick="closeMemories(5)">&times;</span>
     <div class="modal-content">
-        <div class="slideshow-container" id="slideshow5" data-day="5">
+        <div class="slideshow-container" id="slideshow5">
             <div class="slide active">
                 <img src="First meeting .jpeg" alt="Memory 1">
                 <div class="slide-caption">When We First Met 💕</div>
@@ -1033,9 +1563,8 @@
                 <div class="slide-caption">Special Moment 🎥</div>
             </div>
             <div class="slide-nav">
-                <div class="slide-nav-left" onclick="changeSlide(-1, 5)"></div>
-                <div class="slide-nav-center"></div>
-                <div class="slide-nav-right" onclick="changeSlide(1, 5)"></div>
+                <button onclick="changeSlide(-1, 5)">❮</button>
+                <button onclick="changeSlide(1, 5)">❯</button>
             </div>
         </div>
         <div class="slide-dots" id="dots5"></div>
@@ -1045,7 +1574,7 @@
 <div class="memories-modal" id="memoriesModal6">
     <span class="modal-close" onclick="closeMemories(6)">&times;</span>
     <div class="modal-content">
-        <div class="slideshow-container" id="slideshow6" data-day="6">
+        <div class="slideshow-container" id="slideshow6">
             <div class="slide active">
                 <img src="Always good together.jpeg" alt="Memory 1">
                 <div class="slide-caption">Always Good Together 💕</div>
@@ -1066,9 +1595,8 @@
                 <div class="slide-caption">Special Moment 🎥</div>
             </div>
             <div class="slide-nav">
-                <div class="slide-nav-left" onclick="changeSlide(-1, 6)"></div>
-                <div class="slide-nav-center"></div>
-                <div class="slide-nav-right" onclick="changeSlide(1, 6)"></div>
+                <button onclick="changeSlide(-1, 6)">❮</button>
+                <button onclick="changeSlide(1, 6)">❯</button>
             </div>
         </div>
         <div class="slide-dots" id="dots6"></div>
@@ -1078,30 +1606,29 @@
 <div class="memories-modal" id="memoriesModal7">
     <span class="modal-close" onclick="closeMemories(7)">&times;</span>
     <div class="modal-content">
-        <div class="slideshow-container" id="slideshow7" data-day="7">
+        <div class="slideshow-container" id="slideshow7">
             <div class="slide active">
-                <img src="Us,Us,Us.jpeg" alt="Memory 1">
-                <div class="slide-caption"> Us, Us, US ✨</div>
+                <img src="Pookie.HEIC" alt="Memory 1">
+                <div class="slide-caption">Best Friends Forever ✨</div>
             </div>
             <div class="slide">
-                <img src="Pookie_2.jpeg" alt="Memory 2">
+                <img src="Pookie_2.HEIC" alt="Memory 2">
                 <div class="slide-caption">You're So Cute ✨</div>
             </div>
             <div class="slide">
-                <img src="Pookie but good.jpeg" alt="Memory 3">
+                <img src="Pookie_but_good.HEIC" alt="Memory 3">
                 <div class="slide-caption">Perfect Moments 🌟</div>
             </div>
             <div class="slide">
                 <video controls>
-                    <source src="Chefff.mp4" type="video/quicktime">
+                    <source src="media/Chefff.MOV" type="video/quicktime">
                     Your browser does not support the video tag.
                 </video>
                 <div class="slide-caption">Special Moment 🎥</div>
             </div>
             <div class="slide-nav">
-                <div class="slide-nav-left" onclick="changeSlide(-1, 7)"></div>
-                <div class="slide-nav-center"></div>
-                <div class="slide-nav-right" onclick="changeSlide(1, 7)"></div>
+                <button onclick="changeSlide(-1, 7)">❮</button>
+                <button onclick="changeSlide(1, 7)">❯</button>
             </div>
         </div>
         <div class="slide-dots" id="dots7"></div>
@@ -1111,13 +1638,13 @@
 <div class="memories-modal" id="memoriesModal8">
     <span class="modal-close" onclick="closeMemories(8)">&times;</span>
     <div class="modal-content">
-        <div class="slideshow-container" id="slideshow8" data-day="8">
+        <div class="slideshow-container" id="slideshow8">
             <div class="slide active">
                 <img src="Together_party.JPG" alt="Memory 1">
                 <div class="slide-caption">Together Forever 💕</div>
             </div>
             <div class="slide">
-                <img src="Drunkish.jpeg" alt="Memory 2">
+                <img src="First_meeting_.JPG" alt="Memory 2">
                 <div class="slide-caption">Where It All Began ✨</div>
             </div>
             <div class="slide">
@@ -1130,15 +1657,14 @@
             </div>
             <div class="slide">
                 <video controls>
-                    <source src="Impression copy.mp4" type="video/quicktime">
+                    <source src="media/First_ever_paycheque.MOV" type="video/quicktime">
                     Your browser does not support the video tag.
                 </video>
                 <div class="slide-caption">Special Moment 🎥</div>
             </div>
             <div class="slide-nav">
-                <div class="slide-nav-left" onclick="changeSlide(-1, 8)"></div>
-                <div class="slide-nav-center"></div>
-                <div class="slide-nav-right" onclick="changeSlide(1, 8)"></div>
+                <button onclick="changeSlide(-1, 8)">❮</button>
+                <button onclick="changeSlide(1, 8)">❯</button>
             </div>
         </div>
         <div class="slide-dots" id="dots8"></div>
@@ -1161,16 +1687,8 @@
         heartsContainer.appendChild(heart);
     }
 
-    // Slideshow functionality with swipe and autoplay
+    // Slideshow functionality
     let currentSlides = {5: 0, 6: 0, 7: 0, 8: 0};
-    let autoplayIntervals = {5: null, 6: null, 7: null, 8: null};
-    let autoplayEnabled = {5: true, 6: true, 7: true, 8: true};
-    const AUTOPLAY_DELAY = 5000; // 5 seconds
-
-    // Touch/swipe handling
-    let touchStartX = 0;
-    let touchEndX = 0;
-    const minSwipeDistance = 50;
 
     function initDots(day) {
         const dotsContainer = document.getElementById('dots' + day);
@@ -1198,9 +1716,6 @@
         
         slides[currentSlides[day]].classList.add('active');
         dots[currentSlides[day]].classList.add('active');
-
-        // Reset autoplay timer
-        resetAutoplay(day);
     }
 
     function goToSlide(index, day) {
@@ -1214,78 +1729,97 @@
         
         slides[currentSlides[day]].classList.add('active');
         dots[currentSlides[day]].classList.add('active');
-
-        // Reset autoplay timer
-        resetAutoplay(day);
-    }
-
-    function startAutoplay(day) {
-        if (autoplayEnabled[day] && !autoplayIntervals[day]) {
-            autoplayIntervals[day] = setInterval(() => {
-                changeSlide(1, day);
-            }, AUTOPLAY_DELAY);
-        }
-    }
-
-    function stopAutoplay(day) {
-        if (autoplayIntervals[day]) {
-            clearInterval(autoplayIntervals[day]);
-            autoplayIntervals[day] = null;
-        }
-    }
-
-    function resetAutoplay(day) {
-        stopAutoplay(day);
-        if (autoplayEnabled[day]) {
-            startAutoplay(day);
-        }
-    }
-
-    function handleTouchStart(e, day) {
-        touchStartX = e.changedTouches[0].screenX;
-    }
-
-    function handleTouchEnd(e, day) {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe(day);
-    }
-
-    function handleSwipe(day) {
-        const swipeDistance = touchEndX - touchStartX;
-        
-        if (Math.abs(swipeDistance) > minSwipeDistance) {
-            if (swipeDistance > 0) {
-                // Swipe right - previous slide
-                changeSlide(-1, day);
-            } else {
-                // Swipe left - next slide
-                changeSlide(1, day);
-            }
-        }
     }
 
     function openMemories(day) {
         document.getElementById('memoriesModal' + day).style.display = 'block';
         currentSlides[day] = 0;
-        startAutoplay(day);
     }
 
     function closeMemories(day) {
         document.getElementById('memoriesModal' + day).style.display = 'none';
-        stopAutoplay(day);
         // Pause any videos
         const videos = document.querySelectorAll('#memoriesModal' + day + ' video');
         videos.forEach(v => v.pause());
     }
 
-    // Initialize dots and swipe listeners for all slideshows
-    [5, 6, 7, 8].forEach(day => {
-        initDots(day);
+    function openFutureLetter() {
+        // Check if letter has been viewed before
+        const hasViewedLetter = localStorage.getItem('future-letter-viewed');
+        const modal = document.getElementById('futureLetter');
+        const content = modal.querySelector('.future-letter-content');
+        const timer = document.getElementById('letterTimer');
         
-        const slideshow = document.getElementById('slideshow' + day);
-        slideshow.addEventListener('touchstart', (e) => handleTouchStart(e, day), false);
-        slideshow.addEventListener('touchend', (e) => handleTouchEnd(e, day), false);
-    });
+        if (hasViewedLetter === 'true') {
+            // Letter was already viewed - show a gentle message instead
+            timer.style.display = 'none';
+            
+            content.innerHTML = `
+                <div class="future-letter-header">
+                    <h2>A Letter From Our Future</h2>
+                    <div class="future-letter-date">February 14, 2029 • Three Years Later</div>
+                </div>
+                <div style="text-align: center; padding: 60px 40px;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">💫</div>
+                    <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5em; color: #00ffff; margin-bottom: 20px;">
+                        A Moment Already Treasured
+                    </h2>
+                    <p style="color: #88dddd; font-size: 1.2em; line-height: 1.8;">
+                        The letter from our future was meant to be experienced once,<br>
+                        like a shooting star across the night sky.<br><br>
+                        But its message remains:<br>
+                        We're building something beautiful together. ✨💕
+                    </p>
+                </div>
+            `;
+            modal.style.display = 'block';
+        } else {
+            // First time viewing - show the letter
+            timer.style.display = 'block';
+            modal.style.display = 'block';
+            
+            // Countdown timer
+            let timeLeft = 60; // 60 seconds
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timer.textContent = `⏱️ ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                }
+            }, 1000);
+            
+            // Auto-close after 60 seconds (1 minute) and mark as viewed
+            setTimeout(() => {
+                clearInterval(timerInterval);
+                localStorage.setItem('future-letter-viewed', 'true');
+                closeFutureLetter();
+            }, 60000);
+        }
+    }
+
+    function closeFutureLetter() {
+        const modal = document.getElementById('futureLetter');
+        const timer = document.getElementById('letterTimer');
+        modal.style.display = 'none';
+        timer.style.display = 'none';
+        
+        // Mark as viewed when manually closed
+        localStorage.setItem('future-letter-viewed', 'true');
+        
+        // Return to romantic mode
+        document.body.classList.remove('future-mode');
+        
+        // Remove glitch effect from title
+        const title = document.getElementById('mainTitle');
+        title.classList.remove('glitch');
+        title.removeAttribute('data-text');
+    }
+
+    // Initialize dots for all slideshows
+    [5, 6, 7, 8].forEach(day => initDots(day));
 
     // Auto-unlock days based on date
     function checkAndUnlockDays() {
@@ -1347,6 +1881,9 @@
     }
     
     function showUnlockNotification() {
+        // Notification disabled
+        return;
+        
         const notification = document.getElementById('unlockNotification');
         notification.style.display = 'block';
         
@@ -1373,6 +1910,8 @@
 
     // Save checkbox states
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let themeChanged = false;
+    
     checkboxes.forEach(checkbox => {
         const saved = localStorage.getItem(checkbox.id);
         if (saved === 'true') {
@@ -1380,6 +1919,93 @@
         }
         checkbox.addEventListener('change', function() {
             localStorage.setItem(this.id, this.checked);
+            
+            // Trigger theme switch and 2029 letter when first Hug Day checkbox is clicked
+            if (this.id === 'kiss1' && this.checked && !themeChanged) {
+                themeChanged = true;
+                
+                // Play screen break sound (using Web Audio API to generate sound)
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create a distorted glitch sound
+                const playGlitchSound = () => {
+                    // White noise burst
+                    const bufferSize = audioContext.sampleRate * 0.3;
+                    const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = Math.random() * 2 - 1;
+                    }
+                    
+                    const noise = audioContext.createBufferSource();
+                    noise.buffer = buffer;
+                    
+                    const filter = audioContext.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.value = 1000;
+                    
+                    const gainNode = audioContext.createGain();
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                    
+                    noise.connect(filter);
+                    filter.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    noise.start();
+                    noise.stop(audioContext.currentTime + 0.3);
+                    
+                    // Add digital beep
+                    const oscillator = audioContext.createOscillator();
+                    oscillator.type = 'square';
+                    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.2);
+                    
+                    const beepGain = audioContext.createGain();
+                    beepGain.gain.setValueAtTime(0.2, audioContext.currentTime);
+                    beepGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    
+                    oscillator.connect(beepGain);
+                    beepGain.connect(audioContext.destination);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.2);
+                };
+                
+                playGlitchSound();
+                
+                // Trigger screen break animation
+                const screenBreak = document.getElementById('screenBreak');
+                screenBreak.classList.add('active');
+                
+                // Change theme after initial flash
+                setTimeout(() => {
+                    document.body.classList.add('future-mode');
+                    
+                    // Add glitch effect to title
+                    const title = document.getElementById('mainTitle');
+                    title.classList.add('glitch');
+                    title.setAttribute('data-text', title.textContent);
+                    
+                    // Force emoji re-render by triggering reflow
+                    document.querySelectorAll('.day-emoji').forEach(emoji => {
+                        emoji.style.display = 'none';
+                        emoji.offsetHeight; // Trigger reflow
+                        emoji.style.display = 'block';
+                    });
+                }, 300);
+                
+                // Remove screen break overlay
+                setTimeout(() => {
+                    screenBreak.classList.remove('active');
+                }, 1500);
+                
+                // Show 2029 letter
+                setTimeout(() => {
+                    openFutureLetter();
+                }, 2000);
+            }
         });
     });
 
