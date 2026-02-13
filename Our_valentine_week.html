@@ -1139,11 +1139,81 @@
             max-height: 350px;
         }
     }
+
+        .cinematic-intro {
+    position: fixed;
+    inset: 0;
+    background: black;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    animation: introFade 6s forwards;
+}
+
+.intro-content {
+    text-align: center;
+    color: white;
+    animation: introText 5s ease forwards;
+}
+
+.intro-content h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5em;
+    margin-bottom: 15px;
+}
+
+.intro-content p {
+    font-size: 1.2em;
+    opacity: 0.8;
+}
+
+.intro-content span {
+    margin-top: 10px;
+    display: block;
+    font-size: 1.1em;
+    color: #ff9a9e;
+}
+
+.skip-intro {
+    position: absolute;
+    bottom: 30px;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+@keyframes introFade {
+    0% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { opacity: 0; pointer-events: none; }
+}
+
+@keyframes introText {
+    0% { opacity: 0; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1); }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
 </style>
 ```
 
 </head>
 <body>
+    <div id="cinematicIntro" class="cinematic-intro">
+    <div class="intro-content">
+        <h1>For the Love of My Life 💖</h1>
+        <p>Every heartbeat… every moment… every dream…</p>
+        <span>✨ Just for you ✨</span>
+    </div>
+       <button class="skip-intro" onclick="skipIntro()">Skip</button>
+    </div>
+    
     <div class="floating-hearts" id="floatingHearts"></div>
     <div class="screen-break-overlay" id="screenBreak"></div>
 
@@ -1672,6 +1742,18 @@
 </div>
 
 <script>
+
+    const intro = document.getElementById('cinematicIntro');
+
+setTimeout(() => {
+    intro.style.display = 'none';
+    startMusic();
+}, 6000);
+
+function skipIntro() {
+    intro.style.display = 'none';
+    startMusic();
+}
     // Create floating hearts
     const heartsContainer = document.getElementById('floatingHearts');
     const heartSymbols = ['💕', '💖', '💗', '💓', '💝', '❤️', '💘'];
