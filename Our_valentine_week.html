@@ -1200,6 +1200,27 @@
     80% { opacity: 1; }
     100% { opacity: 0; }
 }
+
+.music-toggle {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    z-index: 5000;
+    transition: all 0.3s ease;
+}
+
+.music-toggle:hover {
+    transform: scale(1.1);
+}
 </style>
 ```
 
@@ -1741,8 +1762,62 @@
     </div>
 </div>
 
+    <audio id="bgMusic" loop>
+    <source src="Dreamy.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicToggle" class="music-toggle">🔊</button>
+
 <script>
 
+    const music = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+let musicPlaying = false;
+
+function startMusic() {
+    music.volume = 0;
+    music.play();
+    fadeInMusic();
+    musicPlaying = true;
+}
+
+function fadeInMusic() {
+    let vol = 0;
+    const fade = setInterval(() => {
+        if (vol < 0.6) {
+            vol += 0.02;
+            music.volume = vol;
+        } else {
+            clearInterval(fade);
+        }
+    }, 80);
+}
+
+musicToggle.addEventListener('click', () => {
+    if (musicPlaying) {
+        fadeOutMusic();
+        musicToggle.textContent = '🔇';
+    } else {
+        startMusic();
+        musicToggle.textContent = '🔊';
+    }
+    musicPlaying = !musicPlaying;
+});
+
+function fadeOutMusic() {
+    let vol = music.volume;
+    const fade = setInterval(() => {
+        if (vol > 0.05) {
+            vol -= 0.05;
+            music.volume = vol;
+        } else {
+            clearInterval(fade);
+            music.pause();
+        }
+    }, 80);
+}
+
+    
     const intro = document.getElementById('cinematicIntro');
 
 setTimeout(() => {
