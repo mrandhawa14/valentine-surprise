@@ -131,12 +131,15 @@
         text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
     }
 
-    .timeline {
-        max-width: 1200px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-    }
+.timeline {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    position: relative;
+}
+
 
     .timeline::before {
         content: '';
@@ -163,10 +166,16 @@
     }
 
     .day-card {
+        width: 100%;
+        max-width: 340px;
+        margin: auto;
+        }
+
+    /* .day-card {
         position: relative;
         margin-bottom: 50px;
         animation: fadeInUp 0.8s ease backwards;
-    }
+    } */
 
     .day-card.locked {
         opacity: 0.5;
@@ -1221,6 +1230,39 @@
 .music-toggle:hover {
     transform: scale(1.1);
 }
+
+
+.heart {
+    position: fixed;
+    font-size: 20px;
+    pointer-events: none;
+    animation: floatUp 3s linear forwards;
+    z-index: 9999;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-150px) scale(1.6); opacity: 0; }
+}
+
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 14px;
+    top: 50%;
+    left: 50%;
+    opacity: 0.9;
+    animation: confettiFall 2.5s ease-out forwards;
+    z-index: 9999;
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translate(var(--x), var(--y)) rotate(720deg);
+        opacity: 0;
+    }
+}
+
 </style>
 ```
 
@@ -2006,7 +2048,9 @@ function skipIntro() {
             
             if (todayVancouver >= cardDate) {
                 card.classList.remove('locked');
+                confettiBurst(window.innerWidth / 2, window.innerHeight / 2);
                 card.classList.add('unlocked');
+                
                 
                 // Show photo and memories button for days 5-8
                 if (dayNum >= 5) {
@@ -2232,6 +2276,35 @@ function skipIntro() {
         }
     `;
     document.head.appendChild(style);
+
+
+    function heartBurst(x, y, count = 18) {
+    for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = '💖';
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+        heart.style.fontSize = 14 + Math.random() * 20 + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+    }
+}
+
+function confettiBurst(x, y, count = 40) {
+    for (let i = 0; i < count; i++) {
+        const conf = document.createElement('div');
+        conf.className = 'confetti';
+        conf.style.background = `hsl(${Math.random() * 360},100%,70%)`;
+        conf.style.setProperty('--x', (Math.random() - 0.5) * 450 + 'px');
+        conf.style.setProperty('--y', Math.random() * 400 + 100 + 'px');
+        conf.style.left = x + 'px';
+        conf.style.top = y + 'px';
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 2500);
+    }
+}
+
 </script>
 ```
 
