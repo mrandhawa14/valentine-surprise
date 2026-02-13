@@ -1263,6 +1263,26 @@
     }
 }
 
+        .sparkle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 14px;
+    animation: sparkleFade 1.2s linear forwards;
+    z-index: 9999;
+}
+
+@keyframes sparkleFade {
+    0% {
+        opacity: 1;
+        transform: translate(0,0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-10px,-25px) scale(1.6);
+    }
+}
+
+
 </style>
 ```
 
