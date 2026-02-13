@@ -2325,6 +2325,29 @@ function confettiBurst(x, y, count = 40) {
     }
 }
 
+    let sparkleCooldown = false;
+
+document.addEventListener('mousemove', e => {
+    if (sparkleCooldown) return;
+    sparkleCooldown = true;
+
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.textContent = '✨';
+    sparkle.style.left = e.clientX + 'px';
+    sparkle.style.top = e.clientY + 'px';
+    document.body.appendChild(sparkle);
+
+    setTimeout(() => sparkle.remove(), 1200);
+    setTimeout(() => sparkleCooldown = false, 35);
+});
+
+document.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    heartBurst(t.clientX, t.clientY, 10);
+});
+
+
 </script>
 ```
 
